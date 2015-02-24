@@ -29,7 +29,7 @@ set_version_variables()
 	# set svn revision number to use 
 	# you can set this to an alternate revision 
 	# or empty to checkout latest 
-	rnum=44441
+	rnum=43694
 
 	#set date here, so it's guaranteed the same for all images
 	#even though build can take several hours
@@ -399,16 +399,9 @@ for target in $targets ; do
 	
 	gargoyle_packages=$(ls "$package_dir" )
 	for gp in $gargoyle_packages ; do
-		IFS_ORIG="$IFS"
-		IFS_LINEBREAK="$(printf '\n\r')"
-		IFS="$IFS_LINEBREAK"
-		matching_packages=$(find "$target-src/package" -name "$gp")
-		for mp in $matching_packages ; do
-			if [ -d "$mp" ] && [ -e "$mp/Makefile" ] ; then
-				rm -rf "$mp" 
-			fi
-		done
-		IFS="$IFS_ORIG"
+		if [ -d "$target-src/package/$gp" ] ; then
+			rm -rf "$target-src/package/$gp" 
+		fi
 		cp -r "$package_dir/$gp" "$target-src/package"
 	done
 
@@ -484,16 +477,7 @@ for target in $targets ; do
 			cd "$openwrt_package_dir"
 			find . -name ".svn" | xargs rm -rf
 			for gp in $gargoyle_packages ; do
-				IFS_ORIG="$IFS"
-				IFS_LINEBREAK="$(printf '\n\r')"
-				IFS="$IFS_LINEBREAK"
-				matching_packages=$(find . -name "$gp")
-				for mp in $matching_packages ; do
-					if [ -d "$mp" ] && [ -e "$mp/Makefile" ] ; then
-						rm -rf "$mp" 
-					fi
-				done
-				IFS="$IFS_ORIG"
+				find . -name "$gp" | xargs rm -rf
 			done
 			cd "$top_dir"
 		fi

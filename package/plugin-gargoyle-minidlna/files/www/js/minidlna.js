@@ -198,7 +198,7 @@ function saveChanges()
 	}
 
 	Commands.push("/etc/init.d/minidlna stop");
-	Commands.push("kill $(pidof minidlna)");
+	Commands.push("kill $(pidof minidlnad)");
 	if(enabled==1)
 	{
 		Commands.push("sleep 2");
@@ -240,7 +240,7 @@ function rescanMedia()
 {
 	var Commands = [];
 	Commands.push("/etc/init.d/minidlna stop");
-	Commands.push("kill -9 $(pidof minidlna)");
+	Commands.push("kill -9 $(pidof minidlnad)");
 	Commands.push("rm -f $(uci get minidlna.config.db_dir)/files.db");
 	Commands.push("/etc/init.d/minidlna start");
 

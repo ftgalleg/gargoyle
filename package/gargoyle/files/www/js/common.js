@@ -42,41 +42,27 @@ function setControlsEnabled(enabled, showWaitMessage, waitText)
 	{
 		var totalHeight="100%";
 		var totalWidth="100%";
-		
-		var heightFromDoc=0;
-		var widthFromDoc=0;
 		if(document.body.parentNode.scrollHeight)
 		{
-			heightFromDoc = heightFromDoc >= document.body.parentNode.scrollHeight ? heightFromDoc : document.body.parentNode.scrollHeight
+			totalHeight = document.body.parentNode.scrollHeight + "px";
 		}
-		if(document.body.scrollHeight)
+		else if(document.height)
 		{
-			heightFromDoc = heightFromDoc >= document.body.scrollHeight ? heightFromDoc : document.body.scrollHeight
+			totalHeight = document.height + "px";
 		}
-		if(document.height)
-		{
-			heightFromDoc = heightFromDoc >= document.height ? heightFromDoc : document.height
-		}
-		totalHeight = heightFromDoc > 0 ? heightFromDoc + "px" : totalHeight
-
 		if(document.body.parentNode.scrollWidth)
 		{
-			widthFromDoc = widthFromDoc >= document.body.parentNode.scrollWidth ? widthFromDoc : document.body.parentNode.scrollWidth
+			totalWidth  = document.body.parentNode.scrollWidth;
+			if(document.width)
+			{
+				totalWidth = document.width > totalWidth ? document.width : totalWidth;
+			}
+			totalWidth = totalWidth + "px";
 		}
-		if(document.body.scrollWidth)
+		else if(document.width)
 		{
-			widthFromDoc = widthFromDoc >= document.body.scrollWidth ? widthFromDoc : document.body.scrollWidth
+			totalWidth = document.width + "px";
 		}
-		if(document.width)
-		{
-			widthFromDoc = widthFromDoc >= document.width ? widthFromDoc : document.width
-		}
-		totalWidth = widthFromDoc > 0 ? widthFromDoc + "px" : totalWidth
-		
-
-
-
-		
 
 		var viewportHeight;
 		var vewportWidth;
@@ -495,7 +481,6 @@ function UCIContainer()
 				else
 				{
 					//should never get here -- if problems put debugging code here
-				        //val = val;    // good enough for a breakpoint to be set.
 				}
 			}
 			copy.set(splitKey[1], splitKey[2], splitKey[3], val, true);
